@@ -1,0 +1,1 @@
+enum EventMode { add, edit }
