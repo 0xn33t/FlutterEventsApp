@@ -1,5 +1,6 @@
 import 'package:eventsapp/core/common/app_theme.dart';
 import 'package:eventsapp/core/common/enums.dart';
+import 'package:eventsapp/core/common/environment.dart';
 import 'package:eventsapp/core/models/event_model.dart';
 import 'package:eventsapp/core/providers/event_provider.dart';
 import 'package:eventsapp/core/utils/date_utils.dart';
@@ -40,8 +41,8 @@ class _EventFormScreenState extends State<EventFormScreen> {
       _titleController.text = _event.title;
       _locationController.text = _event.location;
       _descriptionController.text = _event.description;
-      _startDateTimeController.text = _event.starts.format('yyyy-MM-dd H:mm');
-      _endDateTimeController.text = _event.ends.format('yyyy-MM-dd H:mm');
+      _startDateTimeController.text = _event.starts.format(dateTimePattern);
+      _endDateTimeController.text = _event.ends.format(dateTimePattern);
     }
   }
 
@@ -117,7 +118,7 @@ class _EventFormScreenState extends State<EventFormScreen> {
       minutes: _timeSelected.minute,
     ));
     setState(() {
-      controller.text = _dateTimeSelected.format('yyyy-MM-dd H:mm');
+      controller.text = _dateTimeSelected.format(dateTimePattern);
     });
   }
 

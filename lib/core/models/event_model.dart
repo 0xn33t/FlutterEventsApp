@@ -1,3 +1,4 @@
+import 'package:eventsapp/core/common/environment.dart';
 import 'package:eventsapp/core/utils/date_utils.dart';
 
 final String tableEvent = 'event';
@@ -23,8 +24,8 @@ class Event {
   });
 
   String eventTime(){
-    String _time = '${starts.format('H:m a')} to ';
-    _time += ends.format(starts.isSameDate(ends) ? 'H:m a' : 'yyyy-MM-dd H:m a');
+    String _time = '${starts.format(timePattern)} to ';
+    _time += ends.format(starts.isSameDate(ends) ? timePattern : fullDateTimePattern);
     return _time;
   }
 
@@ -33,8 +34,8 @@ class Event {
       columnTitle: title,
       columnLocation: location,
       columnDescription: description,
-      columnStarts: starts.format('yyyy-MM-dd H:m'),
-      columnEnds: ends.format('yyyy-MM-dd H:m'),
+      columnStarts: starts.format(dateTimePattern),
+      columnEnds: ends.format(dateTimePattern),
     };
     if (id != null) _eventMap[columnId] = id;
     return _eventMap;
