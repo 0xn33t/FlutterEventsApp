@@ -228,9 +228,16 @@ class _EventFormScreenState extends State<EventFormScreen> {
                       field: _DateTimeField.end,
                     ),
                     validator: (value) {
-                      return value == null || value.isEmpty
-                          ? 'Ending date and time are required'
-                          : null;
+                      if(value == null || value.isEmpty){
+                        return 'Ending date and time are required';
+                      }else{
+                        if(_startDateTimeController.text.isNotEmpty){
+                          if(DateTime.parse(_endDateTimeController.text).isBefore(DateTime.parse(_startDateTimeController.text))){
+                            return 'The end date must be after the start date';
+                          }
+                        }
+                      }
+                      return null;
                     },
                   ),
                 ),
