@@ -1,4 +1,3 @@
-import 'package:eventsapp/core/common/app_color.dart';
 import 'package:eventsapp/core/common/app_theme.dart';
 import 'package:eventsapp/core/common/enums.dart';
 import 'package:eventsapp/core/models/event_model.dart';
@@ -126,7 +125,7 @@ class _DateToolbar extends StatelessWidget {
                     date.year.toString(),
                     style: TextStyle(
                       fontSize: 12,
-                      color: AppColors.metaColor,
+                      color: Theme.of(context).textTheme.caption!.color,
                     ),
                   ),
                 ],
@@ -138,14 +137,14 @@ class _DateToolbar extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
               decoration: BoxDecoration(
-                color: Color(0xFFe3e7fa),
+                color: Theme.of(context).primaryColor.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Text(
                 'Change',
                 style: TextStyle(
                   fontSize: 11,
-                  color: AppColors.primaryColor,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ),

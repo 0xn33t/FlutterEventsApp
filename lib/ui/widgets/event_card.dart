@@ -1,4 +1,3 @@
-import 'package:eventsapp/core/common/app_color.dart';
 import 'package:eventsapp/core/common/app_theme.dart';
 import 'package:eventsapp/core/models/event_model.dart';
 import 'package:eventsapp/ui/widgets/event_options.dart';
@@ -29,7 +28,6 @@ class EventCard extends StatelessWidget {
         Icon(
           icon,
           size: 18,
-          color: AppColors.secondaryColor,
         ),
         const SizedBox(
           width: 6,
@@ -49,7 +47,7 @@ class EventCard extends StatelessWidget {
       margin: const EdgeInsets.only(right: 20, left: 20, top: 12),
       decoration: BoxDecoration(
           color: Colors.white,
-          border: Border.all(color: AppColors.borderColor),
+          border: Border.all(color: Theme.of(context).colorScheme.borderColor),
           borderRadius: BorderRadius.circular(12)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -79,7 +77,7 @@ class EventCard extends StatelessWidget {
           Text(
             event.description,
             style: TextStyle(
-              color: AppColors.metaColor,
+              color: Theme.of(context).textTheme.caption!.color,
             ),
           ),
           const SizedBox(height: 12),

@@ -1,4 +1,3 @@
-import 'package:eventsapp/core/common/app_color.dart';
 import 'package:eventsapp/core/models/event_model.dart';
 import 'package:eventsapp/ui/widgets/event_card.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +26,7 @@ class EventListItem extends StatelessWidget {
               Container(
                 margin: const EdgeInsetsDirectional.only(end: 8),
                 decoration: BoxDecoration(
-                  color: AppColors.accentColor,
+                  color: Theme.of(context).accentColor,
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(5),
                     bottomRight: Radius.circular(5),
@@ -43,7 +42,7 @@ class EventListItem extends StatelessWidget {
               const SizedBox(width: 4),
               Text(
                 _time[1],
-                style: TextStyle(color: AppColors.metaColor),
+                style: TextStyle(color: Theme.of(context).textTheme.caption!.color),
               ),
             ],
           ),
