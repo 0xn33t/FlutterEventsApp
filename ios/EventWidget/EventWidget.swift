@@ -3,7 +3,7 @@
 //  EventWidget
 //
 //  Created by Mustafa on 03/11/1442 AH.
-//
+//  Github:: https://github.com/0xn33t
 //
 
 import WidgetKit
