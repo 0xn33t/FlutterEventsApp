@@ -6,6 +6,11 @@ import 'package:eventsapp/core/services/widgetkit_service.dart';
 import 'package:eventsapp/core/utils/date_utils.dart';
 
 class EventRepository {
+  
+  static final EventRepository _singleton = EventRepository._internal();
+  EventRepository._internal();
+  factory EventRepository() => _singleton;
+
   final EventDbServerice _eventDbServerice = EventDbServerice();
   final WidgetkitService _widgetkitService = WidgetkitService();
 

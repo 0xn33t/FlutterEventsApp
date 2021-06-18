@@ -6,9 +6,7 @@ import 'package:flutter_widgetkit/flutter_widgetkit.dart';
 
 class WidgetkitService {
   static final WidgetkitService _singleton = WidgetkitService._internal();
-
   WidgetkitService._internal();
-
   factory WidgetkitService() => _singleton;
 
   Future<bool> setEvents(List<Event> data) async {

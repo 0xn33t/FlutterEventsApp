@@ -4,6 +4,11 @@ import 'package:sqflite/sqflite.dart';
 import 'package:eventsapp/core/utils/date_utils.dart';
 
 class EventDbServerice {
+
+  static final EventDbServerice _singleton = EventDbServerice._internal();
+  EventDbServerice._internal();
+  factory EventDbServerice() => _singleton;
+
   Database? _db;
 
   final List<String> _columns = [

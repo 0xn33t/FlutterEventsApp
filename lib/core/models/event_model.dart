@@ -1,4 +1,4 @@
-import 'package:eventsapp/core/common/environment.dart';
+import 'package:eventsapp/core/common/environment.dart' show timePattern, fullDateTimePattern, dateTimePattern;
 import 'package:eventsapp/core/utils/date_utils.dart';
 
 final String tableEvent = 'event';
