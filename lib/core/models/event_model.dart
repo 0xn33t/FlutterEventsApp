@@ -51,4 +51,11 @@ class Event {
       ends: DateTime.parse(map[columnEnds]!),
     );
   }
+
+  Map<String, String> toJson() {
+    return {
+      'title': title,
+      'start': starts.toString(),
+    };
+  }
 }

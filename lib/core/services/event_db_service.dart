@@ -1,12 +1,22 @@
 import 'package:eventsapp/core/common/environment.dart';
 import 'package:eventsapp/core/models/event_model.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:eventsapp/core/utils/date_utils.dart';
 
 class EventDbServerice {
-  Database? db;
+  Database? _db;
+
+  final List<String> _columns = [
+    columnId,
+    columnTitle,
+    columnLocation,
+    columnDescription,
+    columnStarts,
+    columnEnds
+  ];
 
   Future<void> open() async {
-    db = await openDatabase(
+    _db = await openDatabase(
       dbKey,
       version: 1,
       onCreate: (Database db, int version) async {
@@ -24,53 +34,49 @@ class EventDbServerice {
   }
 
   Future<Event> insert(Event event) async {
-    event.id = await db!.insert(tableEvent, event.toMap());
+    event.id = await _db!.insert(tableEvent, event.toMap());
     return event;
   }
 
   Future<List<Event>?> getEvents() async {
-    final _mapsResults = await db!.query(
+    final _mapsResults = await _db!.query(
       tableEvent,
-      columns: [
-        columnId,
-        columnTitle,
-        columnLocation,
-        columnDescription,
-        columnStarts,
-        columnEnds
-      ],
+      columns: _columns,
     );
-    return _mapsResults.isNotEmpty ? _mapsResults.map((event) => Event.fromMap(event)).toList() : null;
+    return _mapsResults.isNotEmpty
+        ? _mapsResults.map((event) => Event.fromMap(event)).toList()
+        : null;
+  }
+
+  Future<List<Event>?> getActiveEvents() async {
+    final _mapsResults = await _db!.query(
+      tableEvent,
+      columns: _columns,
+      where: 'strftime(\'%Y-%m-%d\', $columnStarts) >= ?',
+      whereArgs: [DateTime.now().format(datePattern)],
+    );
+    return _mapsResults.isNotEmpty
+        ? _mapsResults.map((event) => Event.fromMap(event)).toList()
+        : null;
   }
 
   Future<List<Event>?> getEventsByDate(String date) async {
-    final _mapsResults = await db!.query(
+    final _mapsResults = await _db!.query(
       tableEvent,
-      columns: [
-        columnId,
-        columnTitle,
-        columnLocation,
-        columnDescription,
-        columnStarts,
-        columnEnds
-      ],
-      where: '? BETWEEN strftime(\'%Y-%m-%d\', $columnStarts) AND strftime(\'%Y-%m-%d\', $columnEnds)',
+      columns: _columns,
+      where:
+          '? BETWEEN strftime(\'%Y-%m-%d\', $columnStarts) AND strftime(\'%Y-%m-%d\', $columnEnds)',
       whereArgs: [date],
     );
-    return _mapsResults.isNotEmpty ? _mapsResults.map((event) => Event.fromMap(event)).toList() : null;
+    return _mapsResults.isNotEmpty
+        ? _mapsResults.map((event) => Event.fromMap(event)).toList()
+        : null;
   }
 
   Future<Event?> getEvent(int id) async {
-    final _mapsResults = await db!.query(
+    final _mapsResults = await _db!.query(
       tableEvent,
-      columns: [
-        columnId,
-        columnTitle,
-        columnLocation,
-        columnDescription,
-        columnStarts,
-        columnEnds
-      ],
+      columns: _columns,
       where: '$columnId = ?',
       whereArgs: [id],
     );
@@ -78,15 +84,21 @@ class EventDbServerice {
   }
 
   Future<int> delete(int id) async {
-    return await db!.delete(
+    return await _db!.delete(
       tableEvent,
       where: '$columnId = ?',
       whereArgs: [id],
     );
   }
 
+  Future<int> deleteAll() async {
+    return await _db!.delete(
+      tableEvent,
+    );
+  }
+
   Future<int> update(Event event) async {
-    return await db!.update(
+    return await _db!.update(
       tableEvent,
       event.toMap(),
       where: '$columnId = ?',
@@ -94,5 +106,5 @@ class EventDbServerice {
     );
   }
 
-  Future close() async => db!.close();
+  Future close() async => _db!.close();
 }
